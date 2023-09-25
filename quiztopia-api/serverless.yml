@@ -57,6 +57,12 @@ functions:
       - httpApi:
           path: /api/auth/login
           method: POST
+  getAllUsers:
+    handler: functions/user/getAllUsers/index.handler
+    events:
+      - httpApi:
+          path: /api/auth/getAllUsers
+          method: GET
 
 resources:
   Resources:
