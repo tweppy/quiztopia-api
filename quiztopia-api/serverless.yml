@@ -1,0 +1,84 @@
+service: quiztopia-api
+frameworkVersion: '3'
+
+provider:
+  name: aws
+  runtime: nodejs18.x
+  region: eu-north-1
+  iam:
+    role: arn:aws:iam::445870998602:role/base
+
+plugins:
+  - serverless-webpack
+
+package:
+  individually: true
+
+functions:
+  getQuizzes:
+    handler: functions/getQuizzes/index.handler
+    events:
+      - httpApi:
+          path: /api/quiz
+          method: GET
+  getQuiz:
+    handler: functions/getQuiz/index.handler
+    events:
+      - httpApi:
+          path: /api/quiz/{quizId}
+          method: GET
+  postQuiz:
+    handler: functions/postQuiz/index.handler
+    events:
+      - httpApi:
+          path: /api/quiz
+          method: POST
+  postQuestion:
+    handler: functions/postQuestion/index.handler
+    events:
+      - httpApi:
+          path: /api/quiz/question
+          method: POST
+  deleteQuiz:
+    handler: functions/deleteQuiz/index.handler
+    events:
+      - httpApi:
+          path: /api/quiz/{quizId}
+          method: DELETE
+  signup:
+    handler: functions//user/signup/index.handler
+    events:
+      - httpApi:
+          path: /api/auth/signup
+          method: POST
+  login:
+    handler: functions/user/login/index.handler
+    events:
+      - httpApi:
+          path: /api/auth/login
+          method: POST
+
+resources:
+  Resources:
+    quizDB:
+      Type: AWS::DynamoDB::Table
+      Properties:
+        TableName: quizDB
+        AttributeDefinitions:
+          - AttributeName: quizId
+            AttributeType: S
+        KeySchema:
+          - AttributeName: quizId
+            KeyType: HASH
+        BillingMode: PAY_PER_REQUEST
+    quizUsersDb:
+      Type: AWS::DynamoDB::Table
+      Properties:
+        TableName: quizUsersDb
+        AttributeDefinitions:
+          - AttributeName: userId
+            AttributeType: S
+        KeySchema:
+          - AttributeName: userId
+            KeyType: HASH
+        BillingMode: PAY_PER_REQUEST
