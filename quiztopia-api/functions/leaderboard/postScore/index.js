@@ -4,16 +4,6 @@ const { db } = require("../../../services/db");
 const middy = require("@middy/core");
 const jsonBodyParser = require("@middy/http-json-body-parser");
 
-/*
-auth in header.
-
-{
-  "userId": "str",
-  "quizId": "str",
-  "score": "str"
-}
-*/
-
 async function postScore(event) {
   const { quizId, userId, score } = event.body;
 
@@ -39,7 +29,7 @@ async function postScore(event) {
         ":newScores": [
           {
             score: score,
-            userId: userId
+            userId: userId,
           },
         ],
       },

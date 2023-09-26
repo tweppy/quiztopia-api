@@ -19,13 +19,13 @@ async function getScores(event) {
     }
 
     const { scores, quizName } = result.Item;
-    
+
     const sorted = scores.sort((a, b) => b.score - a.score);
 
     const response = {
       quizName,
       quizId,
-      highscores: sorted
+      highscores: sorted,
     };
 
     return sendResponse(200, { success: true, result: response });
