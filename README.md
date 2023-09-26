@@ -3,7 +3,7 @@ Individuell examination: Quiztopia API
 
 # Quiztopia
 
-Welcome to Quiztopia, a web application that allows users to create and manage quizzes. This application is built using Node.js, AWS services, DynamoDB, and serverless architecture. It provides various functionalities such as account creation, user authentication, quiz creation, adding questions to quizzes, quiz viewing, and detailed insights for administrators.
+Welcome to Quiztopia, a web application that allows users to create and manage quizzes. This application is built using Node.js, AWS services, DynamoDB, and serverless architecture. It provides various functionalities such as account creation, user authentication, quiz creation, adding questions to quizzes, adding user scores to quizzes, quiz viewing, viewing highscores for a quiz, and detailed insights for administrators.
 
 ## Features
 
@@ -12,6 +12,7 @@ Welcome to Quiztopia, a web application that allows users to create and manage q
 - **Question Management**: Easily add questions to your quizzes.
 - **Quiz Viewing**: View quizzes and their questions.
 - **Admin Dashboard**: Administrators can view all users and detailed information about quizzes, including answers.
+- **Leaderboard**: Users can add a score to a quiz and view the highscores for a quiz.
 
 ## Built With
 
