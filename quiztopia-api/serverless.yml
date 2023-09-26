@@ -19,7 +19,7 @@ functions:
     handler: functions/getQuizzes/index.handler
     events:
       - httpApi:
-          path: /api/quiz
+          path: /api/admin/quizzes
           method: GET
   getQuiz:
     handler: functions/getQuiz/index.handler
@@ -61,7 +61,7 @@ functions:
     handler: functions/user/getAllUsers/index.handler
     events:
       - httpApi:
-          path: /api/user/getAllUsers
+          path: /api/admin/getAllUsers
           method: GET
 
 resources:

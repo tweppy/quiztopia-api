@@ -6,6 +6,7 @@ const jsonBodyParser = require("@middy/http-json-body-parser");
 
 async function deleteQuiz(event) {
   const { quizId } = event.pathParameters;
+  const { userId } = event.body;
 
   const params = {
     TableName: "quizDB",
@@ -19,6 +20,12 @@ async function deleteQuiz(event) {
       return sendError(404, { success: false, message: "Quiz not found" });
     }
 
+    const quizCreator = result.Item.userId;
+    
+    if (userId !== quizCreator) {
+      return sendError(401, { msg: "Unauthorized user: You can't delete someone else's quiz", quizCreator: quizCreator, userIdBody: userId });
+    }
+
     await db.delete(params).promise();
 
     return sendResponse(200, { success: true, message: "Quiz deleted" });
@@ -29,6 +36,5 @@ async function deleteQuiz(event) {
 }
 
 export const handler = middy(deleteQuiz)
-.use(jsonBodyParser())
-.use(validateToken)
+.use(jsonBodyParser()).use(validateToken)
 .handler(deleteQuiz);

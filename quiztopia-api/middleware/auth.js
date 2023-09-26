@@ -13,7 +13,6 @@ const validateToken = {
 
       const data = jwt.verify(token, "4815162342");
 
-      console.log('bodyId:', bodyId, '-', 'data.userId:', data.userId)
       if (bodyId !== data.userId) {
         return sendError(401, { success: false, error: "UserId doesn't match token" });
       }

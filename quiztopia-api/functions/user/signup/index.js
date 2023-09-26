@@ -35,4 +35,6 @@ async function signup(event) {
   }
 }
 
-export const handler = middy(signup).use(jsonBodyParser()).handler(signup);
+export const handler = middy(signup)
+.use(jsonBodyParser())
+.handler(signup);
