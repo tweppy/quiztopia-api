@@ -35,4 +35,4 @@ To run Quiztopia locally, follow these steps:
 
 1. Clone the repository.
 2. Install the necessary dependencies using `npm install`.
-3. Configure your AWS credentials for DynamoDB access by creating an .env file and add your profile and lambda role.
+3. Configure your AWS credentials for DynamoDB access by creating an .env file and adding your profile and lambda role.
