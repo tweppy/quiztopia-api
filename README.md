@@ -16,8 +16,10 @@ Welcome to Quiztopia, a web application that allows users to create and manage q
 ## Built With
 
 - Node.js
-- AWS (Amazon Web Services)
-- DynamoDB Serverless Database
+- AWS Lambda
+- API Gateway
+- DynamoDB
+- Serverless Framework
 - Insomnia (for testing endpoints)
 
 ## Dependencies
