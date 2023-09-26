@@ -16,6 +16,7 @@ async function postQuiz(event) {
         quizName: quizName,
         userId: userId,
         questions: [],
+        scores: [],
       },
     };
 

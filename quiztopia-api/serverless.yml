@@ -56,7 +56,7 @@ functions:
           path: /api/quiz/{quizId}
           method: DELETE
   signup:
-    handler: functions//user/signup/index.handler
+    handler: functions/user/signup/index.handler
     events:
       - httpApi:
           path: /api/user/signup
@@ -66,6 +66,18 @@ functions:
     events:
       - httpApi:
           path: /api/user/login
+          method: POST
+  getScores:
+    handler: functions/leaderboard/getScores/index.handler
+    events:
+      - httpApi:
+          path: /api/quiz/leaderboard
+          method: GET
+  postScore:
+    handler: functions/leaderboard/postScore/index.handler
+    events:
+      - httpApi:
+          path: /api/quiz/leaderboard
           method: POST
 
 resources:
