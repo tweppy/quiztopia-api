@@ -4,4 +4,7 @@ jspm_packages
 
 # Serverless directories
 .serverless
+
+# Other
 plan.md
+.env

@@ -5,8 +5,12 @@ provider:
   name: aws
   runtime: nodejs18.x
   region: eu-north-1
+  profile: ${env:PROFILE}
   iam:
-    role: arn:aws:iam::445870998602:role/base
+    role: ${env:LAMBDA_ROLE}
+  deploymentMethod: direct
+
+useDotenv: true
 
 plugins:
   - serverless-webpack
@@ -16,10 +20,16 @@ package:
 
 functions:
   getQuizzes:
-    handler: functions/getQuizzes/index.handler
+    handler: functions/admin/getQuizzes/index.handler
     events:
       - httpApi:
           path: /api/admin/quizzes
+          method: GET
+  getAllUsers:
+    handler: functions/admin/getAllUsers/index.handler
+    events:
+      - httpApi:
+          path: /api/admin/getAllUsers
           method: GET
   getQuiz:
     handler: functions/getQuiz/index.handler
@@ -57,12 +67,6 @@ functions:
       - httpApi:
           path: /api/user/login
           method: POST
-  getAllUsers:
-    handler: functions/user/getAllUsers/index.handler
-    events:
-      - httpApi:
-          path: /api/admin/getAllUsers
-          method: GET
 
 resources:
   Resources:

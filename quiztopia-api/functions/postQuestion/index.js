@@ -42,6 +42,11 @@ async function postQuestion(event) {
       },
     };
 
+    const quizCreator = result.Item.userId;
+    if (userId !== quizCreator) {
+      return sendError(401, { msg: "Unauthorized user: You can't add questions to someone else's quiz", quizCreator: quizCreator, userIdBody: userId });
+    }
+
     await db.update(params).promise();
 
     const newQ = params.ExpressionAttributeValues[":newQuestion"][0];

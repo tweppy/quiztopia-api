@@ -19,11 +19,12 @@ async function getQuiz(event) {
       return sendError(404, { success: false, message: "Quiz not found" });
     }
 
-    const { quizId, userId, questions } = result.Item;
+    const { quizId, userId, questions, quizName } = result.Item;
 
     const questionList = questions.map((question) => question.question);
 
     const response = {
+      quizName,
       quizId,
       userId,
       questions: questionList,

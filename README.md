@@ -1,2 +1,36 @@
 # quiztopia-api
 Individuell examination: Quiztopia API
+
+# Quiztopia
+
+Welcome to Quiztopia, a web application that allows users to create and manage quizzes. This application is built using Node.js, AWS services, DynamoDB, and serverless architecture. It provides various functionalities such as account creation, user authentication, quiz creation, adding questions to quizzes, quiz viewing, and detailed insights for administrators.
+
+## Features
+
+- **Account Management**: Users can create accounts and sign in securely.
+- **Quiz Creation**: Create quizzes with custom questions and answers.
+- **Question Management**: Easily add questions to your quizzes.
+- **Quiz Viewing**: View quizzes and their questions.
+- **Admin Dashboard**: Administrators can view all users and detailed information about quizzes, including answers.
+
+## Built With
+
+- Node.js
+- AWS (Amazon Web Services)
+- DynamoDB Serverless Database
+- Insomnia (for testing endpoints)
+
+## Dependencies
+
+- **nanoid**: Used for generating unique IDs.
+- **middy**: A middleware engine for AWS Lambda functions, simplifying the creation of serverless applications.
+- **jsonwebtoken**: For generating and verifying JSON Web Tokens (JWT) for user authentication.
+- **bcryptjs**: Used for hashing passwords securely.
+
+## Getting Started
+
+To run Quiztopia locally, follow these steps:
+
+1. Clone the repository.
+2. Install the necessary dependencies using `npm install`.
+3. Configure your AWS credentials for DynamoDB access by creating an .env file and add your profile and lambda role.

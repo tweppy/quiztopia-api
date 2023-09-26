@@ -1,5 +1,5 @@
-const { sendResponse, sendError } = require("../../responses/index");
-const { db } = require("../../services/db");
+const { sendResponse, sendError } = require("../../../responses/index");
+const { db } = require("../../../services/db");
 const middy = require("@middy/core");
 
 async function getQuizzes() {
