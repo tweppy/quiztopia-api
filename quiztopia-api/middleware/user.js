@@ -14,12 +14,4 @@ async function checkUsername(username) {
   return result;
 }
 
-async function checkBody(body) {
-  if (!body.username || !body.password) {
-    return sendError(404, { success: false, message: "Missing password or username from body" });
-  }
-
-  return;
-}
-
-module.exports = { checkUsername, checkBody };
+module.exports = { checkUsername };

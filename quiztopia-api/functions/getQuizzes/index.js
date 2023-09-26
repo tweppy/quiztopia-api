@@ -1,22 +1,16 @@
 const { sendResponse, sendError } = require("../../responses/index");
 const { db } = require("../../services/db");
+const middy = require("@middy/core");
 
-let quizzes;
-
-exports.handler = async (event, context) => {
+async function getQuizzes() {
   try {
-    // const { Items } = await db.scan({
-    //     TableName: "quizDB",
-    //     FilterExpression: "attribute_exists(#DYNOBASE_quizName)",
-    //     ExpressionAttributeNames: {
-    //       "#DYNOBASE_quizName": "quizName",
-    //     },
-    //   }).promise();
     const results = await db.scan({ TableName: "quizDB" }).promise();
-    quizzes = results.Items;
 
-    return sendResponse(200, { success: true});
+    return sendResponse(200, { success: true, results: results.Items });
   } catch (error) {
     return sendError(500, { success: false, message: "Error" });
   }
-};
+}
+
+export const handler = middy(getQuizzes)
+.handler(getQuizzes);

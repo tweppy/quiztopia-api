@@ -1,29 +1,36 @@
-const jwt = require('jsonwebtoken');
+const jwt = require("jsonwebtoken");
+const { sendError } = require("../responses");
 
 const validateToken = {
-    before: async (request) => {
-        try {
-            // if (!request.event.headers) throw new Error();
+  before: async (request) => {
+    try {
+      const token = request.event.headers.authorization?.replace("Bearer ", "");
+      const bodyId = request.event.body.userId;
 
-            const token = request.event.headers.authorization.replace('Bearer ', '');
+      if (!token) {
+        return sendError(400, { success: false, error: "No token" });
+      }
 
-            if (!token) throw new Error();
+      const data = jwt.verify(token, "4815162342");
 
-            const data = jwt.verify(token.trim(), 'a1b1c1');
-            request.event.id = data.id;
-            request.event.username = data.username;
+      console.log('bodyId:', bodyId, '-', 'data.userId:', data.userId)
+      if (bodyId !== data.userId) {
+        return sendError(401, { success: false, error: "UserId doesn't match token" });
+      }
 
-            return request.response;
-        } catch (error) {
-            request.event.error = '401';
-            return request.response;
-        }
-    },
-    // onError
-    onError: async (request) => {
-        request.event.error = '401'; 
-        return request.response;
+      request.event.userId = data.userId;
+
+      return request.response;
+    } catch (error) {
+      console.log(error);
+
+      return sendError(401, { success: false, error: "Invalid or expired token" });
     }
+  },
+  onError: async (request) => {
+    request.event.error = "401";
+    return request.response;
+  },
 };
 
 module.exports = { validateToken };

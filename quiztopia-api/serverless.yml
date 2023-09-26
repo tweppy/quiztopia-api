@@ -49,19 +49,19 @@ functions:
     handler: functions//user/signup/index.handler
     events:
       - httpApi:
-          path: /api/auth/signup
+          path: /api/user/signup
           method: POST
   login:
     handler: functions/user/login/index.handler
     events:
       - httpApi:
-          path: /api/auth/login
+          path: /api/user/login
           method: POST
   getAllUsers:
     handler: functions/user/getAllUsers/index.handler
     events:
       - httpApi:
-          path: /api/auth/getAllUsers
+          path: /api/user/getAllUsers
           method: GET
 
 resources:

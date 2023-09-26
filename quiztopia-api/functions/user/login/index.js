@@ -1,38 +1,42 @@
-const { checkUsername, checkBody } = require("../../../middleware/user");
+const { checkUsername } = require("../../../middleware/user");
 const { sendResponse, sendError } = require("../../../responses/index");
-const { db } = require("../../../services/db");
 const { comparePassword } = require("../../../utils");
+const jwt = require("jsonwebtoken");
+const middy = require("@middy/core");
+const jsonBodyParser = require("@middy/http-json-body-parser");
 
-exports.handler = async (event, context) => {
-  const { username, password } = JSON.parse(event.body);
+// make stuff into middlewares ?
+async function login(event) {
+  const { username, password } = event.body;
 
   try {
     const result = await checkUsername(username);
     const usersFound = result.Count;
 
-    // make into checkbody
-    if (!username || !password) {
-      return sendError(404, { success: false, message: "Missing password or username from body" });
-    }
-
-    // const validBody = await checkBody(event.body);
-
+    // if no matching username found
     if (usersFound === 0) {
       return sendError(404, { success: false, message: "User not found" });
     }
 
+    // pwd match
     const userData = result.Items[0];
     const storedPasswordHash = userData.password;
     const passwordMatch = await comparePassword(password, storedPasswordHash);
 
+    // np pwd match
     if (!passwordMatch) {
       return sendError(400, { success: false, message: "Invalid password" });
     }
 
-    return sendResponse(200, { success: true, message: `User ${username} successfully logged in!` });
+    // send token
+    const token = jwt.sign({ userId: userData.userId }, "4815162342", {
+      expiresIn: 3600, // 1 hour
+    });
+
+    return sendResponse(200, { success: true, message: `User ${username} successfully logged in!`, token: token, userid: userData.userId });
   } catch (error) {
     return sendError(500, { success: false, error: error });
   }
-};
+}
 
-// needs auth
+export const handler = middy(login).use(jsonBodyParser()).handler(login);

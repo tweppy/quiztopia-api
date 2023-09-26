@@ -1,22 +1,22 @@
 const { sendResponse, sendError } = require("../../../responses/index");
 const { db } = require("../../../services/db");
+const middy = require("@middy/core");
 
-let users;
-
-exports.handler = async (event, context) => {
+async function getAllUsers() {
   try {
-    // const { Items } = await db.scan({
-    //     TableName: "quizUsersDb",
-    //     FilterExpression: "attribute_exists(#DYNOBASE_todo)",
-    //     ExpressionAttributeNames: {
-    //       "#DYNOBASE_todo": "todo",
-    //     },
-    //   }).promise();
     const results = await db.scan({ TableName: "quizUsersDb" }).promise();
-    users = results.Items;
+    // const { username, userId } = results.Items;
 
-    return sendResponse(200, { success: true, users: users });
+    // const response = {
+    //   username,
+    //   userId,
+    // };
+
+    return sendResponse(200, { success: true, users: results.Items });
   } catch (error) {
     return sendError(500, { success: false, message: "Could not get users" });
   }
-};
+}
+
+export const handler = middy(getAllUsers)
+.handler(getAllUsers);
